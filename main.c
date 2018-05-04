@@ -16,7 +16,8 @@ void sig_handler(int signum){
     running = 0;
 }
 
-int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int timeout){
+int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int timeout, int droprate){
+    srand( (unsigned)time( NULL ) );
     struct sigaction a;
     a.sa_handler = sig_handler;
     a.sa_flags = 0;
@@ -148,8 +149,8 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
                                     }
                                 }
                                 currentFrame = frames[i];
-                                i = windowSize;
                                 printf("frame[%d] NAK\n", frames[i]->seqNo);
+                                i = windowSize;
                             }
                         }
 
@@ -174,7 +175,10 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
             encodedMsg[0] = '\0';
             encode("d", currentSeqChar, packets[packetCount], encodedMsg);
             FrameSet(currentFrame, 0, encodedMsg);
-            if (sendto(sock, encodedMsg, strlen(encodedMsg), 0, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
+            if((rand()%100 < droprate)){
+                printf("build a timeout packet");
+            }
+            else if(sendto(sock, encodedMsg, strlen(encodedMsg), 0, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0) {
                 perror("sendto failed\n");
                 exit(1);
             }
@@ -507,19 +511,13 @@ int main(int argc, char *argv[])
                 unsigned short port;
                 unsigned short clntport;
                 int maxSeqNo;
-                int flag = 0;
                 printf("please input local port:\n");
                 scanf("%hu",&port);
                 printf("please input remote port:\n");
                 scanf("%hu",&clntport);
                 printf("please input sequence number\n");
                 scanf("%d",&maxSeqNo);
-                if(fork() == 0){
-                    server_main(port,clntport,maxSeqNo);
-                    flag = 1;
-                }
-                if(flag == 1)
-                    exit(0);
+                server_main(port,clntport,maxSeqNo);
                 break;
             }
             case 2:{
@@ -528,7 +526,7 @@ int main(int argc, char *argv[])
                 int maxSeqNo;
                 int packetsNo;
                 int timeout;
-                int flag = 0;
+                int droprate;
                 printf("please input local port:\n");
                 scanf("%d",&clntport);
                 printf("please input remote port:\n");
@@ -539,12 +537,9 @@ int main(int argc, char *argv[])
                 scanf("%d",&packetsNo);
                 printf("please input time out in ms:\n");
                 scanf("%d",&timeout);
-                if(fork() == 0){
-                    client_main(clntport,servport,maxSeqNo,packetsNo,timeout);
-                    flag = 1;
-                }
-                if(flag == 1)
-                    exit(0);
+                printf("please input droprate in int percent:\n");
+                scanf("%d",&droprate);
+                client_main(clntport,servport,maxSeqNo,packetsNo,timeout, droprate);
                 break;
             }
             case 3:
