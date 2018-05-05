@@ -5,8 +5,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.c" "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles/UDP_server.dir/common.c.o"
+  "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c" "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles/UDP_server.dir/improved_sr.c.o"
   "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/main.c" "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles/UDP_server.dir/main.c.o"
   "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/queue.c" "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles/UDP_server.dir/queue.c.o"
+  "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c" "/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles/UDP_server.dir/standard_sr.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -129,11 +129,61 @@ CMakeFiles/UDP_server.dir/queue.c.o.provides: CMakeFiles/UDP_server.dir/queue.c.
 CMakeFiles/UDP_server.dir/queue.c.o.provides.build: CMakeFiles/UDP_server.dir/queue.c.o
 
 
+CMakeFiles/UDP_server.dir/standard_sr.c.o: CMakeFiles/UDP_server.dir/flags.make
+CMakeFiles/UDP_server.dir/standard_sr.c.o: ../standard_sr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/UDP_server.dir/standard_sr.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/UDP_server.dir/standard_sr.c.o   -c /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c
+
+CMakeFiles/UDP_server.dir/standard_sr.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/UDP_server.dir/standard_sr.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c > CMakeFiles/UDP_server.dir/standard_sr.c.i
+
+CMakeFiles/UDP_server.dir/standard_sr.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/UDP_server.dir/standard_sr.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c -o CMakeFiles/UDP_server.dir/standard_sr.c.s
+
+CMakeFiles/UDP_server.dir/standard_sr.c.o.requires:
+
+.PHONY : CMakeFiles/UDP_server.dir/standard_sr.c.o.requires
+
+CMakeFiles/UDP_server.dir/standard_sr.c.o.provides: CMakeFiles/UDP_server.dir/standard_sr.c.o.requires
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/standard_sr.c.o.provides.build
+.PHONY : CMakeFiles/UDP_server.dir/standard_sr.c.o.provides
+
+CMakeFiles/UDP_server.dir/standard_sr.c.o.provides.build: CMakeFiles/UDP_server.dir/standard_sr.c.o
+
+
+CMakeFiles/UDP_server.dir/improved_sr.c.o: CMakeFiles/UDP_server.dir/flags.make
+CMakeFiles/UDP_server.dir/improved_sr.c.o: ../improved_sr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/UDP_server.dir/improved_sr.c.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/UDP_server.dir/improved_sr.c.o   -c /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c
+
+CMakeFiles/UDP_server.dir/improved_sr.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/UDP_server.dir/improved_sr.c.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c > CMakeFiles/UDP_server.dir/improved_sr.c.i
+
+CMakeFiles/UDP_server.dir/improved_sr.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/UDP_server.dir/improved_sr.c.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c -o CMakeFiles/UDP_server.dir/improved_sr.c.s
+
+CMakeFiles/UDP_server.dir/improved_sr.c.o.requires:
+
+.PHONY : CMakeFiles/UDP_server.dir/improved_sr.c.o.requires
+
+CMakeFiles/UDP_server.dir/improved_sr.c.o.provides: CMakeFiles/UDP_server.dir/improved_sr.c.o.requires
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/improved_sr.c.o.provides.build
+.PHONY : CMakeFiles/UDP_server.dir/improved_sr.c.o.provides
+
+CMakeFiles/UDP_server.dir/improved_sr.c.o.provides.build: CMakeFiles/UDP_server.dir/improved_sr.c.o
+
+
 # Object files for target UDP_server
 UDP_server_OBJECTS = \
 "CMakeFiles/UDP_server.dir/main.c.o" \
 "CMakeFiles/UDP_server.dir/common.c.o" \
-"CMakeFiles/UDP_server.dir/queue.c.o"
+"CMakeFiles/UDP_server.dir/queue.c.o" \
+"CMakeFiles/UDP_server.dir/standard_sr.c.o" \
+"CMakeFiles/UDP_server.dir/improved_sr.c.o"
 
 # External object files for target UDP_server
 UDP_server_EXTERNAL_OBJECTS =
@@ -141,9 +191,11 @@ UDP_server_EXTERNAL_OBJECTS =
 UDP_server: CMakeFiles/UDP_server.dir/main.c.o
 UDP_server: CMakeFiles/UDP_server.dir/common.c.o
 UDP_server: CMakeFiles/UDP_server.dir/queue.c.o
+UDP_server: CMakeFiles/UDP_server.dir/standard_sr.c.o
+UDP_server: CMakeFiles/UDP_server.dir/improved_sr.c.o
 UDP_server: CMakeFiles/UDP_server.dir/build.make
 UDP_server: CMakeFiles/UDP_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable UDP_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/abc123one/CLionProjects/GBN_SR/UDP_server/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable UDP_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/UDP_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -154,6 +206,8 @@ CMakeFiles/UDP_server.dir/build: UDP_server
 CMakeFiles/UDP_server.dir/requires: CMakeFiles/UDP_server.dir/main.c.o.requires
 CMakeFiles/UDP_server.dir/requires: CMakeFiles/UDP_server.dir/common.c.o.requires
 CMakeFiles/UDP_server.dir/requires: CMakeFiles/UDP_server.dir/queue.c.o.requires
+CMakeFiles/UDP_server.dir/requires: CMakeFiles/UDP_server.dir/standard_sr.c.o.requires
+CMakeFiles/UDP_server.dir/requires: CMakeFiles/UDP_server.dir/improved_sr.c.o.requires
 
 .PHONY : CMakeFiles/UDP_server.dir/requires
 

@@ -108,7 +108,7 @@ int decode(char *type, char *seqNo, char *message, char *input){
     type[0] = '\0';
     seqNo[0] = '\0';
     message[0] = '\0';
-
+    //将返回的字符串分离
     token = strsep(&input, &SEPARATOR);
     strcat(type, token);
     token = strsep(&input, &SEPARATOR);
@@ -139,6 +139,7 @@ int recvUDP(int sock, char *msg, struct sockaddr_in clntaddr){
 }
 
 int inWindow(int maxSeqNo, int windowSize, int windowBegin, int seqNo){
+    //溢出数目
     int exceedSeq = windowSize + windowBegin - maxSeqNo;
     if(seqNo >= windowBegin && seqNo < windowBegin + windowSize)
         return 1;

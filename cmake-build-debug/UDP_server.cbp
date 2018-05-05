@@ -84,6 +84,12 @@
 		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.h">
 			<Option target="UDP_server"/>
 		</Unit>
+		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c">
+			<Option target="UDP_server"/>
+		</Unit>
+		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.h">
+			<Option target="UDP_server"/>
+		</Unit>
 		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/main.c">
 			<Option target="UDP_server"/>
 		</Unit>
@@ -91,6 +97,12 @@
 			<Option target="UDP_server"/>
 		</Unit>
 		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/queue.h">
+			<Option target="UDP_server"/>
+		</Unit>
+		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c">
+			<Option target="UDP_server"/>
+		</Unit>
+		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.h">
 			<Option target="UDP_server"/>
 		</Unit>
 		<Unit filename="/Users/abc123one/CLionProjects/GBN_SR/UDP_server/CMakeLists.txt">

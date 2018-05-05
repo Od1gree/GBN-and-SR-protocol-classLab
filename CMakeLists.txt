@@ -3,4 +3,4 @@ project(UDP_server C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(UDP_server main.c common.c common.h queue.c queue.h)
+add_executable(UDP_server main.c common.c common.h queue.c queue.h standard_sr.c standard_sr.h improved_sr.c improved_sr.h)

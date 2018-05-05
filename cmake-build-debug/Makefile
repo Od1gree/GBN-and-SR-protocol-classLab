@@ -150,6 +150,33 @@ common.c.s:
 	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/common.c.s
 .PHONY : common.c.s
 
+improved_sr.o: improved_sr.c.o
+
+.PHONY : improved_sr.o
+
+# target to build an object file
+improved_sr.c.o:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/improved_sr.c.o
+.PHONY : improved_sr.c.o
+
+improved_sr.i: improved_sr.c.i
+
+.PHONY : improved_sr.i
+
+# target to preprocess a source file
+improved_sr.c.i:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/improved_sr.c.i
+.PHONY : improved_sr.c.i
+
+improved_sr.s: improved_sr.c.s
+
+.PHONY : improved_sr.s
+
+# target to generate assembly for a file
+improved_sr.c.s:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/improved_sr.c.s
+.PHONY : improved_sr.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -204,6 +231,33 @@ queue.c.s:
 	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/queue.c.s
 .PHONY : queue.c.s
 
+standard_sr.o: standard_sr.c.o
+
+.PHONY : standard_sr.o
+
+# target to build an object file
+standard_sr.c.o:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/standard_sr.c.o
+.PHONY : standard_sr.c.o
+
+standard_sr.i: standard_sr.c.i
+
+.PHONY : standard_sr.i
+
+# target to preprocess a source file
+standard_sr.c.i:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/standard_sr.c.i
+.PHONY : standard_sr.c.i
+
+standard_sr.s: standard_sr.c.s
+
+.PHONY : standard_sr.s
+
+# target to generate assembly for a file
+standard_sr.c.s:
+	$(MAKE) -f CMakeFiles/UDP_server.dir/build.make CMakeFiles/UDP_server.dir/standard_sr.c.s
+.PHONY : standard_sr.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -216,12 +270,18 @@ help:
 	@echo "... common.o"
 	@echo "... common.i"
 	@echo "... common.s"
+	@echo "... improved_sr.o"
+	@echo "... improved_sr.i"
+	@echo "... improved_sr.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... queue.o"
 	@echo "... queue.i"
 	@echo "... queue.s"
+	@echo "... standard_sr.o"
+	@echo "... standard_sr.i"
+	@echo "... standard_sr.s"
 .PHONY : help
 
 
