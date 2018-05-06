@@ -50,9 +50,10 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
     int stattimeout = 0;
     //为了避免乱序传输造成的麻烦,窗口大小为序列号总大小的一半
     //windowSize = (maxSeqNo + 1) / 2;
-    windowSize = 1;
+
     windowBegin = 0;
     printf("Window size: %d\n", windowSize);
+    windowSize = 1;
 
     int i;
     FRAME **frames;
@@ -128,7 +129,7 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
                     statrecv++;
                     decode(type, seqNo, msg, recvMsg);
                     //匹配状态码
-                    if(strcmp(type, "a") == 0){
+                    if(strcmp(type, "a") == 0 || strcmp(type, "b") == 0){
                         statack++;
                         printf("ack received: %s\n",seqNo);
                         //窗口之外的直接丢弃
@@ -142,7 +143,10 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
                                 //确认收到的seq
                                 if(FrameGetSeq(frames[i]) == atoi(seqNo) && !frames[i]->ack){
                                     currentFrame = frames[i];
-                                    printf("frame[%d] ACK\n", frames[i]->seqNo);
+                                    if(strcmp(type, "b") == 0)
+                                        printf("frame[%d] ACK, with server data: %s\n", frames[i]->seqNo, msg);
+                                    else
+                                        printf("frame[%d] ACK, no server data\n", frames[i]->seqNo);
                                     FrameAck(currentFrame);
                                     i = windowSize;
                                 }
@@ -250,7 +254,8 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
 }
 
 
-int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
+int server_main(unsigned short port, unsigned short clntport, int maxSeqNo, int packetsNo, int droprate){
+    srand( (unsigned)time( NULL ) );
     pthread_t threadID;
     struct sigaction a;
     a.sa_handler = sig_handler_standard;
@@ -277,10 +282,11 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
     int statack = 0;
     int statnak = 0;
 
-    //windowSize = (maxSeqNo + 1) / 2;
-    windowSize = 1;
+    windowSize = (maxSeqNo + 1) / 2;
+
     windowBegin = 0;
     printf("Window size: %d\n", windowSize);
+    windowSize = 1;
     //初始化滑动窗口
     frames = (FRAME **)malloc(sizeof(FRAME *) * windowSize);
     int i;
@@ -288,10 +294,18 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
         frames[i] = malloc(sizeof(FRAME));
         frames[i]->data = malloc(sizeof(char)*100);
     }
+    //maxSeqNo = 1;
     FrameInit(frames, windowSize, maxSeqNo, windowBegin);
     currentFrame = frames[0];
 
     servSock = CreateUDPSocket(port);
+    int packetCount = -1;
+    char **packets;
+    packets = malloc(sizeof(char *)*packetsNo);
+    for(i = 0; i < packetsNo; i++){
+        packets[i] = malloc(sizeof(char)*30);
+        sprintf(packets[i], "data content, server packet %d", i);
+    }
 
     printf("testserver running\n");
 
@@ -303,6 +317,7 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
 
     while(running_standard){
         //检测窗口是否该滑动
+
         if(isFrameAllAck(frames, windowSize)){
             windowBegin = (windowBegin + windowSize) % (maxSeqNo + 1);
             FrameInit(frames, windowSize, maxSeqNo, windowBegin);
@@ -325,6 +340,7 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
         currentSeqNo = atoi(seqNo);
         //接收内容在滑动窗口内
         if(inWindow(maxSeqNo, windowSize, windowBegin, currentSeqNo)){
+            packetCount++;
             for(i = 0; i < windowSize; i++){
                 if(FrameGetSeq(frames[i]) == currentSeqNo){
                     frameNo = i;
@@ -338,21 +354,28 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
                 exit(1);
             }
 
-            printf("Message received - frameNo: %d seqNo: %d\n", frameNo, currentSeqNo);
-            printf("type: %s seqNo: %d msg: %s\n", type, currentSeqNo, msg);
+            //printf("Message received - frameNo: %d seqNo: %d\n", frameNo, currentSeqNo);
+            printf("!!!!Message received -  msg: %s\n", msg);
 
             if(frameNo - framecount <= 0){
                 if(frameNo < framecount || !block){
                     //send ack
-                    encode("a", seqNo, "", replyMsg);
+                    char *temp;
+                    if(packetCount<packetsNo)
+                        encode("b", seqNo, temp=packets[packetCount], replyMsg);
+                    else
+                        encode("a", seqNo, temp="", replyMsg);
                     statsend++;
                     statack++;
-                    if(sendto(servSock, replyMsg, strlen(replyMsg), 0, (struct sockaddr *)&clntaddr, sizeof(clntaddr)) < 0){
+                    if((rand()%100 < droprate)){
+                        printf("!!!server build a timeout packet, data: %s",temp);
+                    }
+                    else if(sendto(servSock, replyMsg, strlen(replyMsg), 0, (struct sockaddr *)&clntaddr, sizeof(clntaddr)) < 0){
                         fprintf(stderr, "server send ack failed: %s\n", strerror(errno));
                         exit(1);
                     }
                     //else
-                    printf("Ack[%s] sent to client: %d\n", seqNo, ntohs(clntaddr.sin_port));
+                    printf("!!!Ack[%s] sent to client: %d\n", seqNo, ntohs(clntaddr.sin_port));
                     if(frameNo == framecount){
                         printf("TO NETWORK LAYER: %s\n", frames[framecount]->data);
                         framecount++;
@@ -373,8 +396,14 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
                         statsend++;
                         statack++;
                         sprintf(seqNo, "%d", lastSeqNo);
-                        encode("a", seqNo, "", replyMsg);
-                        if(sendto(servSock, replyMsg, strlen(replyMsg), 0, (struct sockaddr *)&clntaddr, sizeof(clntaddr)) < 0){
+                        if(packetCount<packetsNo)
+                            encode("b", seqNo, packets[packetCount], replyMsg);
+                        else
+                            encode("a", seqNo, "", replyMsg);
+                        if((rand()%100 < droprate)){
+                            printf("server build a timeout packet");
+                        }
+                        else if(sendto(servSock, replyMsg, strlen(replyMsg), 0, (struct sockaddr *)&clntaddr, sizeof(clntaddr)) < 0){
                             fprintf(stderr, "server send ack failed: %s\n", strerror(errno));
                             exit(1);
                         }
@@ -423,7 +452,11 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
         }
         else{
             //重新确认已经收到
-            encode("a", seqNo, "", replyMsg);
+            char* temp;
+            if(packetCount<packetsNo)
+                encode("b", seqNo, temp=packets[packetCount], replyMsg);
+            else
+                encode("a", seqNo, temp="", replyMsg);
             //send ack
             statsend++;
             statack++;
@@ -432,7 +465,7 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
                 exit(1);
             }
             //else
-            printf("Ack sent to client: %d\n", ntohs(clntaddr.sin_port));
+            printf("!!!!Ack resent to client: %d, with data %s\n", ntohs(clntaddr.sin_port),temp);
         }
     }
 

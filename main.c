@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
                 scanf("%hu",&clntport);
                 printf("please input sequence number\n");
                 scanf("%d",&maxSeqNo);
-                server_main(port,clntport,maxSeqNo);
+                //server_main(port,clntport,maxSeqNo);
                 break;
             }
             case 2:{
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
                 scanf("%d", &timeout);
                 printf("please input droprate in int percent:\n");
                 scanf("%d", &droprate);
-                combined_main_init(clntport, servport, maxSeqNo, packetsNo, timeout, droprate);
+                client_main(clntport, servport, maxSeqNo, packetsNo, timeout, droprate);
                 break;
             }
             case 5: {
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
                 scanf("%d", &packetsNo);
                 printf("please input droprate in int percent:\n");
                 scanf("%d", &droprate);
-                combined_main_pass(clntport, servport, maxSeqNo, packetsNo, timeout);
+                server_main(clntport, servport, maxSeqNo, packetsNo, droprate);
                 break;
             }
             default:

@@ -18,7 +18,7 @@
 int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int timeout, int droprate);
 
 
-int server_main(unsigned short port, unsigned short clntport, int maxSeqNo);
+int server_main(unsigned short port, unsigned short clntport, int maxSeqNo, int packetsNo, int droprate);
 
 
 #endif //UDP_SERVER_STANDARD_SR_H
