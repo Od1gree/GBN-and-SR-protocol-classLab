@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "standard_sr.h"
+#include "improved_sr.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -43,11 +45,19 @@ int main(int argc, char *argv[])
 //
 //    /*关闭套接字*/
 //    close(server_sockfd);
+    int clntport;
+    int servport;
+    int maxSeqNo;
+    int packetsNo;
+    int timeout;
+    int droprate;
     while(1){
         printf("Please input the number to do:\n"
                "1.create a thread to receive packages.\n" //as a server
                "2.create a thread to send packages.\n" //as a client
-               "3.exit program");
+               "3.exit program.\n"
+               "4.create a thread to initial improved sr protocol as client.\n"
+               "5.create a thread as a server.\n");
         int function = 0;
         scanf("%d",&function);
         switch(function){
@@ -65,12 +75,7 @@ int main(int argc, char *argv[])
                 break;
             }
             case 2:{
-                int clntport;
-                int servport;
-                int maxSeqNo;
-                int packetsNo;
-                int timeout;
-                int droprate;
+
                 printf("please input local port:\n");
                 scanf("%d",&clntport);
                 printf("please input remote port:\n");
@@ -86,8 +91,39 @@ int main(int argc, char *argv[])
                 client_main(clntport,servport,maxSeqNo,packetsNo,timeout, droprate);
                 break;
             }
-            case 3:
+            case 3: {
                 exit(0);
+            }
+            case 4: {
+                printf("please input local port:\n");
+                scanf("%d", &clntport);
+                printf("please input remote port:\n");
+                scanf("%d", &servport);
+                printf("please input sequence number\n");
+                scanf("%d", &maxSeqNo);
+                printf("please input number of packs:\n");
+                scanf("%d", &packetsNo);
+                printf("please input time out in ms:\n");
+                scanf("%d", &timeout);
+                printf("please input droprate in int percent:\n");
+                scanf("%d", &droprate);
+                combined_main_init(clntport, servport, maxSeqNo, packetsNo, timeout, droprate);
+                break;
+            }
+            case 5: {
+                printf("please input local port:\n");
+                scanf("%d", &clntport);
+                printf("please input remote port:\n");
+                scanf("%d", &servport);
+                printf("please input sequence number\n");
+                scanf("%d", &maxSeqNo);
+                printf("please input number of packs:\n");
+                scanf("%d", &packetsNo);
+                printf("please input droprate in int percent:\n");
+                scanf("%d", &droprate);
+                combined_main_pass(clntport, servport, maxSeqNo, packetsNo, timeout);
+                break;
+            }
             default:
                 printf("input error\n");
         }

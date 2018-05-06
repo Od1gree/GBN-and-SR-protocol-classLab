@@ -15,6 +15,6 @@
 
 int combined_main_init(int clntport, int servport, int maxSeqNo, int packetNo, int droprate, int timeout);
 
-int combined_main_pass(int port, int clntport, int maxSeqNo, int packetNo, int droprate, int timeout);
+int combined_main_pass(int port, int clntport, int maxSeqNo, int packetNo, int droprate);
 
 #endif //UDP_SERVER_IMPROVED_SR_H

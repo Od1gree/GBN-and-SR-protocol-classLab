@@ -5,7 +5,9 @@
 #include"common.h"
 
 
+
 char SEPARATOR = 30;
+
 
 int FrameInit(FRAME **frame, int size, int maxSeqNo, int beginSeq){
     int i;
@@ -103,6 +105,73 @@ int encode(char *type, char *seqNo, char *message, char *ret){
     return 0;
 }
 
+int encode_improve(char *type_send, char *seqNo_send, char *type_recv, char *seqNo_recv, char *message, char *ret){
+    ret[0] = '\0';
+    if(type_send != NULL)
+        strcat(ret, type_send);
+    else
+        return -1;
+    strncat(ret, &SEPARATOR, 1);
+    if(seqNo_send != NULL)
+        strcat(ret, seqNo_send);
+    else
+        return -1;
+    if(type_recv != NULL)
+        strcat(ret, type_recv);
+    else
+        return -1;
+    strncat(ret, &SEPARATOR, 1);
+    if(seqNo_recv != NULL)
+        strcat(ret, seqNo_recv);
+    else
+        return -1;
+    strncat(ret, &SEPARATOR, 1);
+    if(message != NULL)
+        strcat(ret, message);
+    strncat(ret, &SEPARATOR, 1);
+    return 0;
+}
+
+int encode_combine(char* recv, char* send, char* ret){
+    ret[0] = '\0';
+    if(recv != NULL)
+        strcat(ret, recv);
+    else
+        return -1;
+    strncat(ret, &SEPARATOR, 1);
+    if(send != NULL)
+        strcat(ret, send);
+    else
+        return -1;
+}
+
+int decode_improve(char *type_recv, char *seqNo_recv,char *type_send, char *seqNo_send, char *message, char *input){
+    char *token;
+    type_recv[0] = '\0';
+    seqNo_recv[0] = '\0';
+    type_send[0] = '\0';
+    seqNo_send[0] = '\0';
+    message[0] = '\0';
+    //将返回的字符串分离
+    token = strsep(&input, &SEPARATOR);
+    if(strlen(token) != 0)
+        strcat(type_recv, token);
+    token = strsep(&input, &SEPARATOR);
+    if(strlen(token) != 0)
+        strcat(seqNo_recv, token);
+    token = strsep(&input, &SEPARATOR);
+    if(strlen(token) != 0)
+        strcat(type_send, token);
+    token = strsep(&input, &SEPARATOR);
+    if(strlen(token) != 0)
+        strcat(seqNo_send, token);
+    token = strsep(&input, &SEPARATOR);
+    if(strlen(token) != 0)
+        strcat(message, token);
+
+    return 0;
+}
+
 int decode(char *type, char *seqNo, char *message, char *input){
     char *token;
     type[0] = '\0';
@@ -146,4 +215,26 @@ int inWindow(int maxSeqNo, int windowSize, int windowBegin, int seqNo){
     if(exceedSeq > 0 && seqNo < exceedSeq)
         return 1;
     return 0;
+}
+
+int CreateUDPSocket(unsigned short port){
+    int sock;
+    struct sockaddr_in servAddr;
+
+    if((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
+        fprintf(stderr, "socket create failed\n");
+        exit(1);
+    }
+
+    memset(&servAddr, 0, sizeof(servAddr));
+    servAddr.sin_family = AF_INET;
+    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    servAddr.sin_port = htons(port);
+
+    if(bind(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0){
+        fprintf(stderr, "socket bind failed\n");
+        exit(1);
+    }
+
+    return sock;
 }

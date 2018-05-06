@@ -50,10 +50,18 @@ int isFrameAllAck(FRAME **frame, int size);
 
 int encode(char *type, char *serialNo, char *message, char *ret);
 
-int decode(char *type, char *serialNo, char *message, char *intput);
+int encode_improve(char *type_send, char *seqNo_send, char *type_recv, char *seqNo_recv, char *message, char *ret);
+
+int encode_combine(char* recv, char* send, char* ret);
+
+int decode_improve(char *type_recv, char *seqNo_recv,char *type_send, char *seqNo_send, char *message, char *input);
+
+int decode(char *type, char *seqNo, char *message, char *input);
 
 int recvUDP(int sock, char *msg, struct sockaddr_in clntaddr);
 
 int inWindow(int maxSeqNo, int windowSize, int windowBegin, int seqNo);
+
+int CreateUDPSocket(unsigned short port);
 
 #endif

@@ -4,9 +4,18 @@
 CMakeFiles/UDP_server.dir/common.c.o: ../common.c
 CMakeFiles/UDP_server.dir/common.c.o: ../common.h
 
-CMakeFiles/UDP_server.dir/main.c.o: ../common.h
+CMakeFiles/UDP_server.dir/improved_sr.c.o: ../common.h
+CMakeFiles/UDP_server.dir/improved_sr.c.o: ../improved_sr.c
+CMakeFiles/UDP_server.dir/improved_sr.c.o: ../improved_sr.h
+
+CMakeFiles/UDP_server.dir/main.c.o: ../improved_sr.h
 CMakeFiles/UDP_server.dir/main.c.o: ../main.c
+CMakeFiles/UDP_server.dir/main.c.o: ../standard_sr.h
 
 CMakeFiles/UDP_server.dir/queue.c.o: ../queue.c
 CMakeFiles/UDP_server.dir/queue.c.o: ../queue.h
+
+CMakeFiles/UDP_server.dir/standard_sr.c.o: ../common.h
+CMakeFiles/UDP_server.dir/standard_sr.c.o: ../standard_sr.c
+CMakeFiles/UDP_server.dir/standard_sr.c.o: ../standard_sr.h
 

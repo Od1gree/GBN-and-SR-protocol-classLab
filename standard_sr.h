@@ -13,11 +13,10 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-void sig_handler(int signum);
+
 
 int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int timeout, int droprate);
 
-int CreateUDPSocket(unsigned short port);
 
 int server_main(unsigned short port, unsigned short clntport, int maxSeqNo);
 

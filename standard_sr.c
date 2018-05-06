@@ -8,18 +8,19 @@
 #include "common.h"
 #define STDIN 0
 
-volatile sig_atomic_t running = 1;
+volatile sig_atomic_t running_standard = 1;
+
 //用于在命令行执行时处理用户中断程序
-void sig_handler(int signum){
+void sig_handler_standard(int signum){
     printf("\n");
-    running = 0;
+    running_standard = 0;
 }
 //客户端(作为发送方)
 int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int timeout, int droprate){
     //丢包随机函数
     srand( (unsigned)time( NULL ) );
     struct sigaction a;
-    a.sa_handler = sig_handler;
+    a.sa_handler = sig_handler_standard;
     a.sa_flags = 0;
     sigemptyset(&a.sa_mask);
     sigaction(SIGINT, &a, NULL);
@@ -48,7 +49,8 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
     int statnak = 0;
     int stattimeout = 0;
     //为了避免乱序传输造成的麻烦,窗口大小为序列号总大小的一半
-    windowSize = (maxSeqNo + 1) / 2;
+    //windowSize = (maxSeqNo + 1) / 2;
+    windowSize = 1;
     windowBegin = 0;
     printf("Window size: %d\n", windowSize);
 
@@ -94,7 +96,7 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
 
     printf("testclient running\n");
     //发送数据包的循环
-    while(running){
+    while(running_standard){
         //如果已经成功接收,则滑动窗口
         if(isFrameAllAck(frames, windowSize)){
             windowBegin = (windowBegin + windowSize) % (maxSeqNo + 1);
@@ -247,33 +249,11 @@ int client_main(int clntport, int servport, int maxSeqNo, int packetsNo, int tim
     return 0;
 }
 
-int CreateUDPSocket(unsigned short port){
-    int sock;
-    struct sockaddr_in servAddr;
-
-    if((sock = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
-        fprintf(stderr, "socket create failed\n");
-        exit(1);
-    }
-
-    memset(&servAddr, 0, sizeof(servAddr));
-    servAddr.sin_family = AF_INET;
-    servAddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    servAddr.sin_port = htons(port);
-
-    if(bind(sock, (struct sockaddr *) &servAddr, sizeof(servAddr)) < 0){
-        fprintf(stderr, "socket bind failed\n");
-        exit(1);
-    }
-
-    return sock;
-}
-
 
 int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
     pthread_t threadID;
     struct sigaction a;
-    a.sa_handler = sig_handler;
+    a.sa_handler = sig_handler_standard;
     a.sa_flags = 0;
     sigemptyset(&a.sa_mask);
     sigaction(SIGINT, &a, NULL);
@@ -297,7 +277,8 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
     int statack = 0;
     int statnak = 0;
 
-    windowSize = (maxSeqNo + 1) / 2;
+    //windowSize = (maxSeqNo + 1) / 2;
+    windowSize = 1;
     windowBegin = 0;
     printf("Window size: %d\n", windowSize);
     //初始化滑动窗口
@@ -320,13 +301,13 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo){
     int framecount = 0;
     int frameNo;
 
-    while(running){
+    while(running_standard){
         //检测窗口是否该滑动
         if(isFrameAllAck(frames, windowSize)){
             windowBegin = (windowBegin + windowSize) % (maxSeqNo + 1);
             FrameInit(frames, windowSize, maxSeqNo, windowBegin);
             framecount = 0;
-            printf("WINDOW SLIDED!!!\n");
+            //printf("WINDOW SLIDED!!!\n");
         }
         frameNo = -1;
         recvMsg[0] = '\0';

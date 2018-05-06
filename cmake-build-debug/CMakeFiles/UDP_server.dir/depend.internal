@@ -4,9 +4,18 @@
 CMakeFiles/UDP_server.dir/common.c.o
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.c
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.h
-CMakeFiles/UDP_server.dir/main.c.o
+CMakeFiles/UDP_server.dir/improved_sr.c.o
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.h
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.c
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.h
+CMakeFiles/UDP_server.dir/main.c.o
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/improved_sr.h
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/main.c
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.h
 CMakeFiles/UDP_server.dir/queue.c.o
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/queue.c
  /Users/abc123one/CLionProjects/GBN_SR/UDP_server/queue.h
+CMakeFiles/UDP_server.dir/standard_sr.c.o
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/common.h
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.c
+ /Users/abc123one/CLionProjects/GBN_SR/UDP_server/standard_sr.h
