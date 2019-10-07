@@ -465,7 +465,7 @@ int server_main(unsigned short port, unsigned short clntport, int maxSeqNo, int 
                 exit(1);
             }
             //else
-            printf("!!!!Ack resent to client: %d, with data %s\n", ntohs(clntaddr.sin_port),temp);
+            printf("client timeout\n!!!!Ack resent to client: %d, with data %s\n", ntohs(clntaddr.sin_port),temp);
         }
     }
 
